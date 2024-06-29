@@ -1,0 +1,31 @@
+import cv2
+
+def livestream_from_camera(camera_index=0):
+    # Open a connection to the camera
+    cap = cv2.VideoCapture(camera_index)
+
+    if not cap.isOpened():
+        print("Error: Could not open camera.")
+        return
+
+    while True:
+        # Capture frame-by-frame
+        ret, frame = cap.read()
+        
+        if not ret:
+            print("Error: Failed to capture image")
+            break
+
+        # Display the resulting frame
+        cv2.imshow('Live Stream', frame)
+
+        # Press 'q' to quit the livestream
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    # When everything done, release the capture
+    cap.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":
+    livestream_from_camera()
